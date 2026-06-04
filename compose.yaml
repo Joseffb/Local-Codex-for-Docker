@@ -1,0 +1,32 @@
+services:
+  codex:
+    image: codex-for-docker:local
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    stdin_open: true
+    tty: true
+    working_dir: /workspace
+    environment:
+      CODEX_HOME: /codex-home
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - .:/workspace
+      - codex-home:/codex-home
+      - /var/run/docker.sock:/var/run/docker.sock
+    command:
+      - -c
+      - 'model_provider="docker-model-runner-container"'
+      - -c
+      - 'model_providers.docker-model-runner-container.name="Docker Model Runner"'
+      - -c
+      - 'model_providers.docker-model-runner-container.base_url="http://host.docker.internal:12434/engines/v1"'
+      - -c
+      - 'model_providers.docker-model-runner-container.wire_api="chat_completions"'
+      - -c
+      - 'model_providers.docker-model-runner-container.requires_openai_auth=false'
+
+volumes:
+  codex-home:

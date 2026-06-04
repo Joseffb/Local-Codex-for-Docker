@@ -6,6 +6,7 @@ Codex for Docker is a local-first fork of the open source Codex CLI. Its default
 
 - Local Docker Model Runner execution has been smoke-tested.
 - Large-prompt handling has been smoke-tested with a Docker Model context-size variant.
+- Container packaging is present and its Dockerfile/Compose metadata has been validated, but the full container image has not yet been build-and-run validated.
 
 ## Local-Only Contract
 
@@ -72,5 +73,39 @@ Build and validate locally first:
 4. Verify a coding-agent turn and Docker MCP tool discovery.
 
 For large prompts, Codex for Docker inspects the selected Docker Model and creates/reuses a `codex-for-docker/...:ctxN` variant with the model's native context size when Docker exposes that metadata.
+
+## Container Runtime
+
+The v1 container image packages the Codex for Docker CLI/runtime and a Docker CLI. It does not start or bundle Docker Model Runner, Docker Model Gateway, or a separate Docker MCP Gateway service. Those stay on the host, or must otherwise be reachable from inside the container.
+
+Build the image:
+
+```sh
+docker build -t codex-for-docker:local .
+```
+
+Run with Compose from this repository:
+
+```sh
+docker compose run --rm codex
+```
+
+The Compose example:
+
+- Mounts the current directory at `/workspace`.
+- Persists container Codex state in the `codex-home` volume.
+- Mounts `/var/run/docker.sock` so Docker CLI commands can talk to the host Docker engine.
+- Points the container provider at `http://host.docker.internal:12434/engines/v1`.
+
+To use Docker Model Gateway instead, change the Compose provider URL to `http://host.docker.internal:4000/v1`.
+
+To use a different Docker Model, set `model` through normal Codex config, or add another Compose `-c` override such as:
+
+```yaml
+- -c
+- 'model="ai/your-model"'
+```
+
+Inside the container, dynamic context matching requires `docker model inspect` and `docker model package` to be available to the runtime Docker CLI and requires access to the host Docker socket.
 
 This repository is licensed under the [Apache-2.0 License](LICENSE).
