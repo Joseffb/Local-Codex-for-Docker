@@ -10,12 +10,18 @@ services:
     working_dir: /workspace
     environment:
       CODEX_HOME: /codex-home
+      HOME: /codex-home
+      DOCKER_HOST: unix:///docker.sock
+      CODEX_DOCKER_MODEL_CONTEXT_HOST: http://host.docker.internal:12434
+      CODEX_DOCKER_MODEL_CONTEXT_NAME: codex-host
+    group_add:
+      - "0"
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
       - .:/workspace
       - codex-home:/codex-home
-      - /var/run/docker.sock:/var/run/docker.sock
+      - ${DOCKER_HOST_SOCKET:-${HOME}/.docker/run/docker.sock}:/docker.sock
     command:
       - -c
       - 'model_provider="docker-model-runner-container"'

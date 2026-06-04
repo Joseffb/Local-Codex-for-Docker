@@ -60,12 +60,14 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder /usr/local/bin/codex /usr/local/bin/codex
+COPY --chmod=0755 docker-entrypoint.sh /usr/local/bin/codex-container-entrypoint
 
 RUN useradd --create-home --uid 1000 --shell /bin/zsh codex \
     && install -d -m 0755 -o codex -g codex /workspace /codex-home
 
 USER codex
 ENV CODEX_HOME=/codex-home
+ENV HOME=/codex-home
 WORKDIR /workspace
 
-ENTRYPOINT ["codex"]
+ENTRYPOINT ["codex-container-entrypoint"]

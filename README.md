@@ -100,9 +100,9 @@ The Compose example:
 
 - Mounts the current directory at `/workspace`.
 - Persists container Codex state in the `codex-home` volume.
-- Mounts `/var/run/docker.sock` so Docker CLI commands can talk to the host Docker engine.
+- Mounts the host Docker socket at `/docker.sock` so Docker CLI commands can talk to the host Docker engine. On Docker Desktop, this defaults to `${HOME}/.docker/run/docker.sock`; on Linux, run with `DOCKER_HOST_SOCKET=/var/run/docker.sock`.
 - Points the container provider at `http://host.docker.internal:12434/engines/v1`.
-- Installs the Docker Model CLI plugin so dynamic context matching can call `docker model inspect` and `docker model package` from inside the container.
+- Installs the Docker Model CLI plugin and configures a container-local Docker Model context for `http://host.docker.internal:12434`, so dynamic context matching can call `docker model inspect` and `docker model package` from inside the container without trying to start a second standalone Model Runner.
 
 To use Docker Model Gateway instead, change the Compose provider URL to `http://host.docker.internal:4000/v1`.
 
