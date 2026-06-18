@@ -47,7 +47,7 @@ const CHAT_WIRE_API_REMOVED_ERROR: &str = "`wire_api = \"chat\"` is no longer su
 const DOCKER_MODEL_RUNNER_PROVIDER_NAME: &str = "Docker Model Runner";
 pub const DOCKER_MODEL_RUNNER_PROVIDER_ID: &str = "docker-model-runner";
 pub const DOCKER_MODEL_RUNNER_DEFAULT_BASE_URL: &str = "http://localhost:12434/engines/v1";
-pub const DOCKER_MODEL_RUNNER_DEFAULT_MODEL: &str = "ai/qwen3-coder";
+pub const DOCKER_MODEL_RUNNER_DEFAULT_MODEL: &str = "ai/glm-4.7-flash";
 const DOCKER_MODEL_GATEWAY_PROVIDER_NAME: &str = "Docker Model Gateway";
 pub const DOCKER_MODEL_GATEWAY_PROVIDER_ID: &str = "docker-model-gateway";
 pub const DOCKER_MODEL_GATEWAY_DEFAULT_BASE_URL: &str = "http://localhost:4000/v1";

@@ -147,7 +147,7 @@ fn test_serialize_chat_completions_wire_api() {
 
 #[test]
 fn test_docker_model_runner_bootstrap_model_is_current_coder_model() {
-    assert_eq!(DOCKER_MODEL_RUNNER_DEFAULT_MODEL, "ai/qwen3-coder");
+    assert_eq!(DOCKER_MODEL_RUNNER_DEFAULT_MODEL, "ai/glm-4.7-flash");
 }
 
 #[test]

@@ -22,10 +22,10 @@ The bootstrap default config is:
 
 ```toml
 model_provider = "docker-model-runner"
-model = "ai/qwen3-coder"
+model = "ai/glm-4.7-flash"
 ```
 
-`ai/qwen3-coder` is only the starter model. Change `model` through the normal Codex config paths to use newer Docker Models as they become available.
+`ai/glm-4.7-flash` is only the starter model. Change `model` through the normal Codex config paths to use newer Docker Models as they become available.
 
 Built-in local providers:
 
@@ -66,7 +66,7 @@ Build and validate locally first:
 2. Pull the bootstrap model:
 
    ```sh
-   docker model pull ai/qwen3-coder
+   docker model pull ai/glm-4.7-flash
    ```
 
 3. Run Codex for Docker locally against Docker Model Runner.
